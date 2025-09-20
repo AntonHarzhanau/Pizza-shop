@@ -20,7 +20,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className={`${nunito.variable} antialiased`} lang="en">
+    <html 
+    data-scroll-behavior="smooth"
+    className={`${nunito.variable} antialiased`} lang="en">
       <body>
         <main className="min-h-screen">
           <Header />
