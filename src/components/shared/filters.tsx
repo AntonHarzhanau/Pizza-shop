@@ -47,9 +47,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
                 onClickCheckbox={filters.setSizes}
                 selected={filters.sizes}
                 items={[
-                    { text: '20sm', value: '20' },
-                    { text: '30sm', value: '30' },
-                    { text: '40sm', value: '40' },
+                    { text: '20 Cm', value: '20' },
+                    { text: '30 Cm', value: '30' },
+                    { text: '40 Cm', value: '40' },
                 ]}
             />
 
