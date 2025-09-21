@@ -1,0 +1,25 @@
+# Игнорируем зависимости
+node_modules
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Сборка / артефакты
+dist
+build
+.out
+.next
+coverage
+
+# Конфигурационные файлы и окружение
+.env
+.env.local
+.env.*.local
+
+# Логи
+logs
+*.log
+
+# IDE
+.vscode
+.idea
