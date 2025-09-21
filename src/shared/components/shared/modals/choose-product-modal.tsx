@@ -1,6 +1,10 @@
 'use client';
 
-import { Dialog, DialogContent, DialogTitle } from '@/shared/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from '@/shared/components/ui/dialog';
 import React from 'react';
 import { cn } from '@/shared/lib/utils';
 import { useRouter } from 'next/navigation';
@@ -21,24 +25,21 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
     <Dialog open={Boolean(product)} onOpenChange={() => router.back()}>
       <DialogContent
         className={cn(
-          'p-0 w-[1060px] max-w-[1060px] min-h-[500px] bg-white overflow-hidden',
+          'p-0 w-[1060px] max-w-[1060px] min-h-[550px] bg-white overflow-hidden',
           className
-        )}>
+        )}
+      >
         <DialogTitle hidden={true}></DialogTitle>
-        {
-          isPizzaForm ? (
-            <ChoosePizzaForm 
-              imageUrl={product.imageUrl}
-              name={product.name}
-              ingredients={[]}
-            />
-          ) : (
-            <ChooseProductForm
-              imageUrl={product.imageUrl}
-              name={product.name}
-            />
-          )
-        }
+        {isPizzaForm ? (
+          <ChoosePizzaForm
+            imageUrl={product.imageUrl}
+            name={product.name}
+            ingredients={product.ingredients}
+            items={product.items}
+          />
+        ) : (
+          <ChooseProductForm imageUrl={product.imageUrl} name={product.name} />
+        )}
       </DialogContent>
     </Dialog>
   );

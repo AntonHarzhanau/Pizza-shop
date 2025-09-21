@@ -9,6 +9,7 @@ export { Filters } from './filters';
 export { SearchInput } from './search-input';
 export { PizzaImage } from './pizza-image';
 export { ChooseProductForm } from './choose-product-form';
+export { IngredientItem } from './ingredient-item';
 export { ChoosePizzaForm } from './choose-pizza-form';
 export { GroupVariants } from './group-variants';
 export * from './modals';
