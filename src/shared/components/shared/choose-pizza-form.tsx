@@ -9,7 +9,6 @@ import { GroupVariants } from './group-variants';
 import {
   PizzaSize,
   PizzaType,
-  mapPizzaType,
   pizzaTypes,
 } from '@/shared/constants/pizza';
 import { Ingredient, ProductItem } from '@prisma/client';
@@ -102,7 +101,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
           onClick={handleClickAdd}
           className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
         >
-          Add to cart for {totalPrice} €
+          Add to cart {totalPrice} €
         </Button>
       </div>
     </div>
