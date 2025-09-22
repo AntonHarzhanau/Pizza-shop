@@ -1,0 +1,21 @@
+import { axiosInstance } from './instance';
+import { CartDTO } from './dto/cart.dto';
+
+export const fetchCart = async (): Promise<CartDTO> => {
+  const { data } = await axiosInstance.get<{ cart: CartDTO }>('/cart');
+
+  return data.cart;
+};
+
+export const updateItemQuantity = async (
+  itemId: number,
+  quantity: number
+): Promise<CartDTO> => {
+  
+
+  return (await axiosInstance.patch<CartDTO>('/cart/' + itemId, { quantity })).data;
+};
+
+export const removeCartItem = async (id: number): Promise<CartDTO> => {
+  return (await axiosInstance.delete<CartDTO>('/cart/' + id)).data;
+}

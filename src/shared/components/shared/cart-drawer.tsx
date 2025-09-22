@@ -1,9 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetFooter,
   SheetHeader,
@@ -15,6 +14,8 @@ import { Button } from '../ui';
 import { ArrowRight } from 'lucide-react';
 import { CartDrawerItem } from './cart-drawer-item';
 import { getCartItemDetails } from '@/shared/lib';
+import { useCartStore } from '@/shared/store';
+import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
 
 interface Props {
   className?: string;
@@ -24,6 +25,21 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
   children,
   className,
 }) => {
+  const totalAmount = useCartStore((s) => s.totalAmount);
+  const items = useCartStore((s) => s.items);
+  const fetchCartItems = useCartStore((s) => s.fetchCartItems);
+  const updateItemQuantity = useCartStore((s) => s.updateItemQuantity);
+  const removeCartItem = useCartStore((s) => s.removeCartItem);
+
+  useEffect(() => {
+    fetchCartItems();
+  }, [fetchCartItems]);
+
+  const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
+    const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
+    updateItemQuantity(id, newQuantity);
+  }
+
   return (
     <div className={className}>
       <Sheet>
@@ -31,20 +47,33 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
         <SheetContent className="flex flex-col justify-between pb-0 bg-[#f4f1ee]">
           <SheetHeader>
             <SheetTitle>
-              In cart <span className="font-bold">2 items</span>
+              In cart <span className="font-bold">{items.length} items</span>
             </SheetTitle>
           </SheetHeader>
 
           <div className="mx-2 mt-5 overflow-auto flex-1">
             <div className="mb-2">
-              <CartDrawerItem
-                id={1}
-                imageUrl="https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp"
-                details={getCartItemDetails(1, 20, [])}
-                name="Choriso"
-                price={120}
-                quantity={1}
-              />
+              {items.map((item) => (
+                <CartDrawerItem
+                  key={item.id}
+                  id={item.id}
+                  imageUrl={item.imageUrl}
+                  details={
+                    item.pizzaSize && item.pizzaType
+                      ? getCartItemDetails(
+                          item.ingredients,
+                          item.pizzaType as PizzaType,
+                          item.pizzaSize as PizzaSize
+                        )
+                      : ''
+                  }
+                  name={item.name}
+                  price={item.price}
+                  quantity={item.quantity}
+                  onClickCountButton={(type) => onClickCountButton(item.id, item.quantity, type)}
+                  onClickRemove={() => removeCartItem(item.id)}
+                />
+              ))}
             </div>
           </div>
 
@@ -56,7 +85,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
                   <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
                 </span>
 
-                <span className="font-bold text-lg">30 €</span>
+                <span className="font-bold text-lg">{totalAmount} €</span>
               </div>
 
               <Link href="/cart">
@@ -72,3 +101,8 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
     </div>
   );
 };
+function useShallow(
+  arg0: (state: any) => any[]
+): (state: import('@/shared/store').CartState) => unknown {
+  throw new Error('Function not implemented.');
+}
