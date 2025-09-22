@@ -1,6 +1,5 @@
 import { axiosInstance } from './instance';
 import { CartDTO, CreateCartItemValues } from './dto/cart.dto';
-import { ACTION_DEVTOOLS_CONFIG } from 'next/dist/next-devtools/dev-overlay/shared';
 
 export const fetchCart = async (): Promise<CartDTO> => {
   const { data } = await axiosInstance.get<{ cart: CartDTO }>('/cart');

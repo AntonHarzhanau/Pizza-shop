@@ -1,5 +1,3 @@
-import { Value } from '@radix-ui/react-select';
-
 export const mapPizzaSize = {
   20: 'Small',
   30: 'Medium',

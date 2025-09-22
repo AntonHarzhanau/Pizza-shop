@@ -3,7 +3,7 @@ import React from 'react';
 import { CartButton, Container, SearchInput } from '@/shared/components/shared';
 import Image from 'next/image';
 import { Button } from '@/shared/components/ui';
-import { ArrowRight, ShoppingCart, User } from 'lucide-react';
+import { User } from 'lucide-react';
 import Link from 'next/link';
 
 interface Props {
@@ -20,7 +20,7 @@ export const Header: React.FC<Props> = ({ className }) => {
             <div>
               <h1 className="text-2xl uppercase font-black">Pizza</h1>
               <p className="text-sm text-gray-400 leading-3">
-                It couldn't be more delicious.
+                It couldn&apos;t be more delicious.
               </p>
             </div>
           </div>

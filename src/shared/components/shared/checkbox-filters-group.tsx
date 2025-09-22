@@ -16,7 +16,6 @@ interface Props {
     selected?: Set<string>;
     name?: string;
     onClickCheckbox?: (id: string) => void;
-    defaultValue?: string[];
     className?: string;
 }
 
@@ -33,7 +32,6 @@ export const CheckboxFiltersGroup: React.FC<Props> = (
         selected,
         name,
         onClickCheckbox,
-        defaultValue,
     }) => {
 
     const [showAll, setShowAll] = useState(false);

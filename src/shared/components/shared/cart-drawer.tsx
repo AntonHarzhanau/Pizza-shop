@@ -16,6 +16,7 @@ import { CartDrawerItem } from './cart-drawer-item';
 import { getCartItemDetails } from '@/shared/lib';
 import { useCartStore } from '@/shared/store';
 import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
+import { useShallow } from 'zustand/react/shallow';
 
 interface Props {
   className?: string;
@@ -25,12 +26,17 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
   children,
   className,
 }) => {
-  const totalAmount = useCartStore((s) => s.totalAmount);
-  const items = useCartStore((s) => s.items);
-  const fetchCartItems = useCartStore((s) => s.fetchCartItems);
-  const updateItemQuantity = useCartStore((s) => s.updateItemQuantity);
-  const removeCartItem = useCartStore((s) => s.removeCartItem);
+  // const totalAmount = useCartStore((s) => s.totalAmount);
+  // const items = useCartStore((s) => s.items);
+  // const fetchCartItems = useCartStore((s) => s.fetchCartItems);
+  // const updateItemQuantity = useCartStore((s) => s.updateItemQuantity);
+  // const removeCartItem = useCartStore((s) => s.removeCartItem);
 
+  const [totalAmount, items, fetchCartItems, updateItemQuantity, removeCartItem] = useCartStore(
+    useShallow((s) => [s.totalAmount, s.items, s.fetchCartItems, s.updateItemQuantity, s.removeCartItem])
+  );
+
+ 
   useEffect(() => {
     fetchCartItems();
   }, [fetchCartItems]);
@@ -106,8 +112,3 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
     </div>
   );
 };
-function useShallow(
-  arg0: (state: any) => any[]
-): (state: import('@/shared/store').CartState) => unknown {
-  throw new Error('Function not implemented.');
-}

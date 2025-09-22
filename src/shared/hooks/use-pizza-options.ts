@@ -34,7 +34,7 @@ export const usePizzaOptions = (items: ProductItem[]): ReturnProps => {
     if (!isAvailableCurrentSize && availableSize) {
       setSize(Number(availableSize.value) as PizzaSize);
     }
-  }, [type]);
+  }, [type, size]);
 
   return {
     size,

@@ -18,7 +18,6 @@ export const CartDrawerItem: React.FC<Props> = ({
   price,
   quantity,
   details,
-  disabled,
   onClickCountButton,
   onClickRemove,
   className,
