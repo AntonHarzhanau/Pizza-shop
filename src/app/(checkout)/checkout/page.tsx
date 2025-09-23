@@ -1,4 +1,5 @@
 import {
+  CheckoutItem,
   CheckoutItemDetails,
   Container,
   Title,
@@ -18,7 +19,27 @@ export default function CheckoutPage() {
 
       <div className="flex gap-10">
         <div className="flex flex-col gap-10 flex-1 mb-20">
-          <WhiteBlock title="1. Cart">1231</WhiteBlock>
+          <WhiteBlock title="1. Cart">
+            <div className='flex flex-col gap-5'>
+               <CheckoutItem
+              id={1}
+              imageUrl={'/pizza.webp'}
+              details={'asdfasdfasdfafd asdfasdfasdfasdfs'}
+              name={'asdfsadfsdfsd'}
+              price={10}
+              quantity={2}
+            />
+
+             <CheckoutItem
+              id={1}
+              imageUrl={'/pizza.webp'}
+              details={'asdfasdfasdfafd asdfgfdabsdfasdf sfdasdfasdfa sdfasdfasdfasdfs'}
+              name={'asdfsadfsdfsd'}
+              price={10}
+              quantity={2}
+            />
+            </div>
+          </WhiteBlock>
 
           <WhiteBlock title="2. Pesonal data">
             <div className="grid grid-cols-2 gap-5">
@@ -36,7 +57,7 @@ export default function CheckoutPage() {
               <Input name="phone" className="text-base" placeholder="Phone" />
             </div>
           </WhiteBlock>
-
+           
           <WhiteBlock title="3.Delivery address">
             <div className="flex flex-col gap-5">
               <Input

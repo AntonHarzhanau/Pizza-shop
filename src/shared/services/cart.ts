@@ -2,9 +2,7 @@ import { axiosInstance } from './instance';
 import { CartDTO, CreateCartItemValues } from './dto/cart.dto';
 
 export const fetchCart = async (): Promise<CartDTO> => {
-  const { data } = await axiosInstance.get<{ cart: CartDTO }>('/cart');
-
-  return data.cart;
+  return (await axiosInstance.get<CartDTO>('/cart')).data;
 };
 
 export const updateItemQuantity = async (
