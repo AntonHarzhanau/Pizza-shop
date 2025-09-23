@@ -15,4 +15,6 @@ export { GroupVariants } from './group-variants';
 export { CartButton } from './cart-button';
 export { CartDrawer } from './cart-drawer';
 export { ProductForm } from './product-form';
+export { WhiteBlock } from './white-block';
+export { CheckoutItemDetails } from './checkout-item-details';
 export * from './modals';
