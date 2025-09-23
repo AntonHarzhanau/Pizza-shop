@@ -55,12 +55,20 @@ export async function POST(req: NextRequest) {
     const userCart = await findOrCreateCart(token);
 
     const data = (await req.json()) as CreateCartItemValues;
+    const ing = data.ingredients ?? [];
 
     const findCartItem = await prisma.cartItem.findFirst({
       where: {
         cartId: userCart.id,
         productItemId: data.productItemId,
-        ingredients: { every: { id: { in: data.ingredients } } },
+        AND: [
+          { ingredients: { none: { id: { notIn: ing } } } },
+
+          ...(ing.length
+            ? ing.map((id) => ({ ingredients: { some: { id } } }))
+            : [{ ingredients: { none: {} } }]
+          ),
+        ],
       },
     });
 
@@ -80,7 +88,7 @@ export async function POST(req: NextRequest) {
           cartId: userCart.id,
           productItemId: data.productItemId,
           quantity: 1,
-          ingredients: { connect: data.ingredients?.map((id) => ({ id })) },
+          ingredients: { connect: ing.map((id) => ({ id })) },
         },
       });
     }
