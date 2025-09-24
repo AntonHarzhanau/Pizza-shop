@@ -19,7 +19,7 @@ export const CheckoutItemDetails: React.FC<Props> = ({
         <div className=" font-bold text-lg" />
       </span>
 
-      <span className="font-bold text-lg">{value} €</span>
+      <span className="font-bold text-lg">{value}</span>
     </div>
   );
 };
