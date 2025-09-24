@@ -3,11 +3,12 @@ import { WhiteBlock } from './white-block';
 import { CheckoutItemDetails } from './checkout-item-details';
 import { ArrowRight, Package, Percent, Truck } from 'lucide-react';
 import { Title } from './title';
-import { Button } from '../ui';
+import { Button, Skeleton } from '../ui';
 import { cn } from '@/shared/lib/utils';
 
 interface Props {
   totalAmount: number;
+  loading: boolean;
   className?: string;
 }
 
@@ -16,18 +17,21 @@ const DELIVERY_PRICE = 2;
 
 export const CheckoutSideBar: React.FC<Props> = ({
   totalAmount,
+  loading,
   className,
 }) => {
   const vatPrice = (totalAmount + VAT) / 100;
   const totalPrice = totalAmount + DELIVERY_PRICE + vatPrice;
 
   return (
-    <WhiteBlock className={cn("p-6 sticky top-4", className)}>
+    <WhiteBlock className={cn('p-6 sticky top-4', className)}>
       <div className="flex flex-col gap-1 border-b border-gray-200">
         <Title text="Total" size="lg" />
-        <span className="text-3xl font-extrabold">
-          {totalPrice} €
-        </span>
+        {loading ? (
+          <Skeleton className="w-48 h-11" />
+        ) : (
+          <span className="h-11 text-3xl font-extrabold">{totalPrice} €</span>
+        )}
       </div>
       <CheckoutItemDetails
         title={
@@ -36,7 +40,7 @@ export const CheckoutSideBar: React.FC<Props> = ({
             'Cost of food:'
           </>
         }
-        value={`${totalAmount}`}
+        value={loading ? <Skeleton className="h-6 w-24" /> : `${totalAmount}`}
       />
       <CheckoutItemDetails
         title={
@@ -45,7 +49,7 @@ export const CheckoutSideBar: React.FC<Props> = ({
             'Taxes:'
           </>
         }
-        value={`${vatPrice} €`}
+        value={loading ? <Skeleton className="h-6 w-24" /> : `${vatPrice} €`}
       />
       <CheckoutItemDetails
         title={
@@ -54,7 +58,9 @@ export const CheckoutSideBar: React.FC<Props> = ({
             'Delivery:'
           </>
         }
-        value={`${DELIVERY_PRICE} €`}
+        value={
+          loading ? <Skeleton className="h-6 w-24" /> : `${DELIVERY_PRICE} €`
+        }
       />
 
       <Button
