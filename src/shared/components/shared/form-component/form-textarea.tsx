@@ -3,7 +3,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { RequiredSymbol } from '../required-symbol';
-import { Textarea } from '../../ui';
+import { Textarea } from '@/shared/components/ui';
 import { ClearButton } from '../clear-button';
 
 interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {

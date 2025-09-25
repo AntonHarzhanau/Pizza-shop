@@ -120,9 +120,8 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
                       asChild
                       type="button"
                       className="w-full h-12 text-base"
-                      >
+                    >
                       <Link href="/checkout">
-                      
                         Place an order
                         <ArrowRight className="w-5 ml-2" />
                       </Link>

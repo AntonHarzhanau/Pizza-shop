@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '../../../../prisma/prisma-client';
+import { prisma } from '@/prisma/prisma-client';
 import crypto from 'crypto';
 import { findOrCreateCart } from '@/shared/lib';
 import { CreateCartItemValues } from '@/shared/services/dto/cart.dto';
@@ -66,8 +66,7 @@ export async function POST(req: NextRequest) {
 
           ...(ing.length
             ? ing.map((id) => ({ ingredients: { some: { id } } }))
-            : [{ ingredients: { none: {} } }]
-          ),
+            : [{ ingredients: { none: {} } }]),
         ],
       },
     });

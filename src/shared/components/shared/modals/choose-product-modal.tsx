@@ -10,7 +10,6 @@ import { cn } from '@/shared/lib/utils';
 import { useRouter } from 'next/navigation';
 import { ProductWithRelations } from '@/@types/prisma';
 import { useCartStore } from '@/shared/store';
-import toast from 'react-hot-toast';
 import { useShallow } from 'zustand/react/shallow';
 import { ProductForm } from '../product-form';
 
@@ -22,7 +21,6 @@ interface Props {
 export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
   const router = useRouter();
   const firstItem = product.items[0];
- 
 
   const [addCartItem, loading] = useCartStore(
     useShallow((state) => [state.addCartItem, state.loading])

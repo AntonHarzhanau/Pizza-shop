@@ -12,8 +12,12 @@ import { useCart } from '@/shared/hooks';
 import { FormProvider, useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { checkoutFormSchema, CheckoutFormValues } from '@/shared/constants';
+import { createOrder } from '@/app/actions';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 export default function CheckoutPage() {
+  const [submiting, setSubmiting] = useState(false);
   const { totalAmount, items, updateItemQuantity, removeCartItem, loading } =
     useCart();
 
@@ -38,8 +42,28 @@ export default function CheckoutPage() {
     },
   });
 
-  const onSubmit: SubmitHandler<CheckoutFormValues> = (data) =>
-    console.log(data);
+  const onSubmit: SubmitHandler<CheckoutFormValues> = async (data) => {
+    try {
+      setSubmiting(true);
+      const url = await createOrder(data);
+      toast.success(
+        'Your order has been successfully placed. Proceeding to payment...',
+        {
+          icon: '✅',
+        }
+      );
+
+      if (url) {
+        location.href = url;
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to create order', {
+        icon: '❌',
+      });
+      setSubmiting(false);
+    } 
+  };
 
   return (
     <Container className="mt-5">
@@ -70,7 +94,10 @@ export default function CheckoutPage() {
             </div>
 
             <div className="w-[450px]">
-              <CheckoutSideBar totalAmount={totalAmount} loading={loading} />
+              <CheckoutSideBar
+                totalAmount={totalAmount}
+                loading={loading || submiting}
+              />
             </div>
           </div>
         </form>

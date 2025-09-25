@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { useCartStore } from '../store';
+import { useCartStore } from '@/shared/store';
 import { useShallow } from 'zustand/react/shallow';
-import { CreateCartItemValues } from '../services/dto/cart.dto';
-import { CartStateItem } from '../lib/get-cart-details';
+import { CreateCartItemValues } from '@/shared/services/dto/cart.dto';
+import { CartStateItem } from '@/shared/lib/get-cart-details';
 
 type ReturnProps = {
   totalAmount: number;
@@ -14,9 +14,7 @@ type ReturnProps = {
 };
 
 export const useCart = (): ReturnProps => {
-  const cartState = useCartStore(
-    useShallow((state) => state)
-  );
+  const cartState = useCartStore(useShallow((state) => state));
 
   useEffect(() => {
     cartState.fetchCartItems();

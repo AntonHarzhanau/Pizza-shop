@@ -26,3 +26,4 @@ export { RequiredSymbol } from './required-symbol';
 export * from './form-component';
 export * from './modals';
 export * from './checkout';
+export * from './email-templates';
