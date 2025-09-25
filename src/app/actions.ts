@@ -39,6 +39,7 @@ export async function createOrder(data: CheckoutFormValues) {
         token: cartToken,
       },
     });
+
     if (!userCart) {
       throw new Error('Cart not found');
     }
@@ -57,7 +58,7 @@ export async function createOrder(data: CheckoutFormValues) {
         comment: data.comment,
         totalAmount: userCart.totalAmount,
         status: OrderStatus.PENDING,
-        items: JSON.stringify(userCart.items),
+        items: userCart.items,
       },
     });
     // TODO : implement payment service
@@ -69,7 +70,7 @@ export async function createOrder(data: CheckoutFormValues) {
     const session = await createCheckoutSession({
       orderId: order.id,
       amountTotal: userCart.totalAmount,
-      successUrl: `${process.env.NEXT_PUBLIC_APP_URL}?session_id={CHECKOUT_SESSION_ID}`,
+      successUrl: `${process.env.NEXT_PUBLIC_APP_URL}?paid`,
       cancelUrl: `${process.env.NEXT_PUBLIC_APP_URL}/checkout`,
       description: `Pizza order #${order.id}`,
       lineItems: lineItems,

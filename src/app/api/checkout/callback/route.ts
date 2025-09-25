@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
           return NextResponse.json({ received: true });
         }
 
-        const items = JSON.parse(order?.items as string) as CartItemDTO[];
+        const items = order?.items as unknown as CartItemDTO[];
 
         await sendEmail(
           order.email,

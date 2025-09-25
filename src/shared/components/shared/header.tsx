@@ -1,10 +1,14 @@
+'use client';
+
 import { cn } from '@/shared/lib/utils';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CartButton, Container, SearchInput } from '@/shared/components/shared';
 import Image from 'next/image';
 import { Button } from '@/shared/components/ui';
 import { User } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 interface Props {
   hasSearch?: boolean;
@@ -17,6 +21,15 @@ export const Header: React.FC<Props> = ({
   hasCart = true,
   className,
 }) => {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.has('paid')) {
+      toast.success(
+        'Your order has been successfully paid. Information has been sent to your email.'
+      );
+    }
+  }, []);
   return (
     <header className={cn('border-b', className)}>
       <Container className="flex items-center justify-between py-8">

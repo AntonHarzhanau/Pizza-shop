@@ -11,6 +11,10 @@ interface Props {
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
+  const MAX_PRICE = 50;
+  const MIN_PRICE = 0;
+  const STEP_PRICE = 1;
+
   const { ingredients, loading } = useIngredients();
   const filters = useFilters();
 
@@ -61,9 +65,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
           <Input
             type="number"
             placeholder="0"
-            min={0}
-            max={1000}
-            value={String(filters.prices.priceFrom)}
+            min={MIN_PRICE}
+            max={MAX_PRICE}
+            value={filters.prices.priceFrom ?? ''}
             onChange={(e) =>
               filters.setPrices('priceFrom', Number(e.target.value))
             }
@@ -71,9 +75,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
           <Input
             type="number"
             placeholder="1000"
-            min={100}
-            max={1000}
-            value={String(filters.prices.priceTo)}
+            min={MIN_PRICE}
+            max={MAX_PRICE}
+            value={filters.prices.priceTo ?? ''}
             onChange={(e) =>
               filters.setPrices('priceTo', Number(e.target.value))
             }
@@ -81,12 +85,12 @@ export const Filters: React.FC<Props> = ({ className }) => {
         </div>
 
         <RangeSlider
-          min={0}
-          max={1000}
-          step={10}
+          min={MIN_PRICE}
+          max={MAX_PRICE}
+          step={STEP_PRICE}
           value={[
-            filters.prices.priceFrom || 0,
-            filters.prices.priceTo || 1000,
+            filters.prices.priceFrom || MIN_PRICE,
+            filters.prices.priceTo || MAX_PRICE,
           ]}
           onValueChange={updatePrises}
         />
