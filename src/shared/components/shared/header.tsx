@@ -1,11 +1,16 @@
 'use client';
 
 import { cn } from '@/shared/lib/utils';
-import React, { useEffect } from 'react';
-import { CartButton, Container, SearchInput } from '@/shared/components/shared';
+import React, { useEffect, useState } from 'react';
+import {
+  AuthModal,
+  CartButton,
+  Container,
+  ProfileButton,
+  SearchInput,
+} from '@/shared/components/shared';
 import Image from 'next/image';
-import { Button } from '@/shared/components/ui';
-import { User } from 'lucide-react';
+
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
@@ -21,6 +26,7 @@ export const Header: React.FC<Props> = ({
   hasCart = true,
   className,
 }) => {
+  const [openAuthModal, setOpenAuthModal] = useState(false);
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -48,11 +54,12 @@ export const Header: React.FC<Props> = ({
         <div className="mx-10 flex-1">{hasSearch && <SearchInput />}</div>
 
         <div className="flex items-center gap-3">
-          <Button variant="outline" className="flex items-center gap-1">
-            <User size={16} />
-            SignIn
-          </Button>
+          <AuthModal
+            open={openAuthModal}
+            onClose={() => setOpenAuthModal(false)}
+          />
 
+          <ProfileButton onClickSignIn={() => setOpenAuthModal(true)} />
           {hasCart && <CartButton />}
         </div>
       </Container>

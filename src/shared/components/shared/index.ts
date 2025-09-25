@@ -23,6 +23,8 @@ export { CheckoutSideBar } from './checkout-side-bar';
 export { ClearButton } from './clear-button';
 export { ErrorText } from './error-text';
 export { RequiredSymbol } from './required-symbol';
+export { Providers } from './providers';
+export { ProfileButton } from './profile-button';
 export * from './form-component';
 export * from './modals';
 export * from './checkout';
