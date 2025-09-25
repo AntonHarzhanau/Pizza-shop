@@ -1,6 +1,6 @@
 import { stripe } from '@/shared/lib/stripe';
 
-type LineItem = { name: string; unitAmount: number; quantity: number };
+export type LineItem = { name: string; unitAmount: number; quantity: number };
 
 type CreateCheckoutSessionParams = {
   orderId: number;
@@ -21,26 +21,25 @@ export async function createCheckoutSession({
   lineItems,
   description = `Order #${orderId}`,
 }: CreateCheckoutSessionParams) {
-  const items =
-    lineItems?.length
-      ? lineItems.map((i) => ({
+  const items = lineItems?.length
+    ? lineItems.map((i) => ({
+        price_data: {
+          currency,
+          product_data: { name: i.name },
+          unit_amount: Math.round(i.unitAmount * 100),
+        },
+        quantity: i.quantity,
+      }))
+    : [
+        {
           price_data: {
             currency,
-            product_data: { name: i.name },
-            unit_amount: Math.round(i.unitAmount * 100),
+            product_data: { name: description },
+            unit_amount: Math.round(amountTotal * 100),
           },
-          quantity: i.quantity,
-        }))
-      : [
-          {
-            price_data: {
-              currency,
-              product_data: { name: description },
-              unit_amount: Math.round(amountTotal * 100),
-            },
-            quantity: 1,
-          },
-        ];
+          quantity: 1,
+        },
+      ];
 
   const session = await stripe.checkout.sessions.create(
     {
@@ -49,15 +48,14 @@ export async function createCheckoutSession({
       line_items: items,
       success_url: successUrl,
       cancel_url: cancelUrl,
-      metadata: {
-        orderId: String(orderId),
+      payment_intent_data: {
+        metadata: { orderId: String(orderId) },
       },
     },
     {
-      // защита от повторов
       idempotencyKey: `checkout-session:${orderId}`,
     }
   );
 
-  return session; // session.id, session.url
+  return session;
 }

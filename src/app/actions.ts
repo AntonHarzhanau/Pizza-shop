@@ -6,9 +6,11 @@ import { cookies } from 'next/headers';
 import { sendEmail } from '@/shared/lib';
 import { PayOrderTemplate } from '@/shared/components';
 import React from 'react';
-import { createCheckoutSession } from '@/server/payments/stripe-service';
+import {
+  createCheckoutSession,
+  LineItem,
+} from '@/server/payments/stripe-service';
 import { OrderStatus } from '@prisma/client';
-
 
 export async function createOrder(data: CheckoutFormValues) {
   try {
@@ -58,29 +60,19 @@ export async function createOrder(data: CheckoutFormValues) {
         items: JSON.stringify(userCart.items),
       },
     });
-
-    await prisma.cart.update({
-      where: {
-        id: userCart.id,
-      },
-      data: {
-        totalAmount: 0,
-      },
-    });
-
-    // await prisma.cartItem.deleteMany({
-    //   where: {
-    //     cartId: userCart.id,
-    //   },
-    // });
     // TODO : implement payment service
+    const lineItems: LineItem[] = userCart.items.map((item) => ({
+      name: item.productItem.product.name,
+      unitAmount: item.productItem.price,
+      quantity: item.quantity,
+    }));
     const session = await createCheckoutSession({
       orderId: order.id,
       amountTotal: userCart.totalAmount,
       successUrl: `${process.env.NEXT_PUBLIC_APP_URL}?session_id={CHECKOUT_SESSION_ID}`,
-      cancelUrl: `${process.env.NEXT_PUBLIC_APP_URL}/checkout`, 
+      cancelUrl: `${process.env.NEXT_PUBLIC_APP_URL}/checkout`,
       description: `Pizza order #${order.id}`,
-      // lineItems: собери при желании из userCart.items
+      lineItems: lineItems,
     });
 
     // await sendEmail(
@@ -92,10 +84,9 @@ export async function createOrder(data: CheckoutFormValues) {
     //     paymentUrl: 'https://nextjs.org/',
     //   }) as React.ReactElement
     // );
-
     return session.url!;
   } catch (error) {
     console.error('[CreateOrder]', error);
-    return '/'
+    return '/';
   }
 }
