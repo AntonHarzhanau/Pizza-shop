@@ -22,7 +22,10 @@ export async function createCheckoutSession({
   lineItems,
   description = `Order #${orderId}`,
 }: CreateCheckoutSessionParams) {
-  const idempotencyKey = `checkout-session:${orderId}:${crypto.randomUUID()}`;
+  const idempotencyKey = crypto
+    .createHash('sha256')
+    .update(`checkout-session:${orderId}`)
+    .digest('hex');
 
   const items = lineItems?.length
     ? lineItems.map((i) => ({
