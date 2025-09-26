@@ -1,8 +1,12 @@
+'use client';
+
 import { Button } from '@/shared/components/ui';
 import { Dialog, DialogContent } from '@/shared/components/ui/dialog';
 import { DialogTitle } from '@radix-ui/react-dialog';
 import { signIn } from 'next-auth/react';
-import React from 'react';
+import React, { useState } from 'react';
+import { LoginForm } from './froms/login-form';
+import { RegisterForm } from './froms/register-form';
 
 interface Props {
   open: boolean;
@@ -10,6 +14,12 @@ interface Props {
 }
 
 export const AuthModal: React.FC<Props> = ({ open, onClose }) => {
+  const [type, setType] = useState<'login' | 'register'>('login');
+
+  const onswitchType = () => {
+    setType(type === 'login' ? 'register' : 'login');
+  };
+
   const handleClose = () => {
     onClose();
   };
@@ -17,8 +27,15 @@ export const AuthModal: React.FC<Props> = ({ open, onClose }) => {
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogTitle hidden />
-      <DialogContent className="w-[450px] bg-white p-16">
-        FORM
+      <DialogContent
+        aria-describedby={undefined}
+        className="w-[450px] bg-white p-16"
+      >
+        {type === 'login' ? (
+          <LoginForm onClose={handleClose} />
+        ) : (
+          <RegisterForm />
+        )}
         <hr />
         <div className="flex gap-2">
           <Button
@@ -57,6 +74,9 @@ export const AuthModal: React.FC<Props> = ({ open, onClose }) => {
               alt=""
             />
             Google
+          </Button>
+          <Button variant="outline" onClick={onswitchType} type="button">
+            {type !== 'login' ? 'Login' : 'Register'}
           </Button>
         </div>
       </DialogContent>
