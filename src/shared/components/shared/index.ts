@@ -25,6 +25,7 @@ export { ErrorText } from './error-text';
 export { RequiredSymbol } from './required-symbol';
 export { Providers } from './providers';
 export { ProfileButton } from './profile-button';
+export { InfoBlock } from './info-block';
 export * from './form-component';
 export * from './modals';
 export * from './checkout';
