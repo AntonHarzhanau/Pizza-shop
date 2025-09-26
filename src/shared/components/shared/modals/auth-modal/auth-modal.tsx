@@ -75,10 +75,10 @@ export const AuthModal: React.FC<Props> = ({ open, onClose }) => {
             />
             Google
           </Button>
-          <Button variant="outline" onClick={onswitchType} type="button">
-            {type !== 'login' ? 'Login' : 'Register'}
-          </Button>
         </div>
+        <Button variant="outline" onClick={onswitchType} type="button">
+          {type !== 'login' ? 'Login' : 'Register'}
+        </Button>
       </DialogContent>
     </Dialog>
   );

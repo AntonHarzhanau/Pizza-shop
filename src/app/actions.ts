@@ -4,13 +4,15 @@ import { CheckoutFormValues } from '@/shared/constants';
 import { prisma } from '@/prisma/prisma-client';
 import { cookies } from 'next/headers';
 import { sendEmail } from '@/shared/lib';
-import { PayOrderTemplate } from '@/shared/components';
+import { PayOrderTemplate, VerificationUserTemplate } from '@/shared/components';
 import React from 'react';
 import {
   createCheckoutSession,
   LineItem,
 } from '@/server/payments/stripe-service';
-import { OrderStatus } from '@prisma/client';
+import { OrderStatus, Prisma } from '@prisma/client';
+import { getUserSession } from '@/shared/lib/get-user-session';
+import { hashSync } from 'bcrypt';
 
 export async function createOrder(data: CheckoutFormValues) {
   try {
@@ -89,5 +91,86 @@ export async function createOrder(data: CheckoutFormValues) {
   } catch (error) {
     console.error('[CreateOrder]', error);
     return '/';
+  }
+}
+
+export async function updateUserInfo(body: Prisma.UserUpdateInput) {
+  try {
+    const curretUser = await getUserSession();
+
+    if (!curretUser) {
+      throw new Error('User not found');
+    }
+
+    const findUser = await prisma.user.findFirst({
+      where: {
+        id: Number(curretUser.id),
+      },
+    });
+
+    if (!findUser) {
+      throw new Error('The user is not registered');
+    }
+
+    await prisma.user.update({
+      where: {
+        id: Number(curretUser.id),
+      },
+      data: {
+        fullname: body.fullname,
+        email: body.email,
+        password: body.password
+          ? hashSync(body.password as string, 10)
+          : findUser.password,
+      },
+    });
+  } catch (error) {
+    console.error('Error [UPDATE_USER', error);
+    throw error;
+  }
+}
+
+export async function registerUser(body: Prisma.UserCreateInput) {
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        email: body.email,
+      },
+    });
+
+    if (user) {
+      if (!user.verified) {
+        throw new Error('Email not confirmed');
+      }
+
+      throw new Error('The user already exists');
+    }
+
+    const createdUser = await prisma.user.create({
+      data: {
+        fullname: body.fullname,
+        email: body.email,
+        password: hashSync(body.password, 10),
+      },
+    });
+
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+    await prisma.verificationCode.create({
+      data: {
+        code,
+        userId: createdUser.id,
+      },
+    });
+
+    await sendEmail(
+      createdUser.email,
+      'Pizza Shop / 📝 Registration confirmation',
+      VerificationUserTemplate({
+        code,
+      }) as React.ReactNode
+    );
+  } catch (error) {
+    console.error('Error [CREATE_USER]', error);
   }
 }

@@ -31,7 +31,9 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
       });
 
       if (!response?.ok) {
-        throw Error();
+        return toast.error('Failed to log into account', {
+          icon: '❌',
+        });
       }
 
       onClose?.();
@@ -60,7 +62,7 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
           />
           <img src="/phone-icon.png" alt="phone-icon" width={60} height={60} />
         </div>
-        
+
         <p className="text-gray-400">
           Enter your email to log in to your account.
         </p>
@@ -73,7 +75,7 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
           className="h-12 text-base"
           type="submit"
         >
-          'Login'
+          Login
         </Button>
       </form>
     </FormProvider>

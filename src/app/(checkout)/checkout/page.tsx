@@ -14,12 +14,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { checkoutFormSchema, CheckoutFormValues } from '@/shared/constants';
 import { createOrder } from '@/app/actions';
 import toast from 'react-hot-toast';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { Api } from '@/shared/services/api-client';
+import { FolderMinus } from 'lucide-react';
 
 export default function CheckoutPage() {
   const [submiting, setSubmiting] = useState(false);
   const { totalAmount, items, updateItemQuantity, removeCartItem, loading } =
     useCart();
+  const { data: session } = useSession();
 
   const onClickCountButton = (
     id: number,
@@ -42,6 +46,21 @@ export default function CheckoutPage() {
     },
   });
 
+  useEffect(() => {
+    async function fetchUserInfo() {
+      const data = await Api.auth.getMe();
+      const [firstName, lastName] = data.fullname.split(' ');
+
+      (form.setValue('firstName', firstName),
+        form.setValue('lastName', lastName));
+      form.setValue('email', data.email);
+    }
+
+    if (session) {
+      fetchUserInfo();
+    }
+  }, [session]);
+
   const onSubmit: SubmitHandler<CheckoutFormValues> = async (data) => {
     try {
       setSubmiting(true);
@@ -62,7 +81,7 @@ export default function CheckoutPage() {
         icon: '❌',
       });
       setSubmiting(false);
-    } 
+    }
   };
 
   return (

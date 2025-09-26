@@ -14,6 +14,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   hasSearch?: boolean;
@@ -26,14 +27,27 @@ export const Header: React.FC<Props> = ({
   hasCart = true,
   className,
 }) => {
+  const router = useRouter();
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const searchParams = useSearchParams();
 
   useEffect(() => {
+    let toastMessage = '';
     if (searchParams.has('paid')) {
-      toast.success(
-        'Your order has been successfully paid. Information has been sent to your email.'
-      );
+      toastMessage =
+        'Your order has been successfully paid. Information has been sent to your email.';
+    }
+
+    if (searchParams.has('verified')) {
+      toastMessage = 'Email successfully confirmed.';
+    }
+
+    if (toastMessage) {
+      router.replace('/');
+      toast.success(toastMessage, {
+        icon: '✅',
+        duration: 2000,
+      });
     }
   }, []);
   return (
