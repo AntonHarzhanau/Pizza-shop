@@ -43,6 +43,7 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
         icon: '✅',
       });
     } catch (error) {
+      console.error(error);
       return toast.error('Error updating data!', {
         icon: '❌',
       });
@@ -67,17 +68,11 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
           <FormInput name="fullname" label="Full name" required />
           <FormInput name="email" label="E-mail" required />
 
-          <FormInput
-            type="password"
-            name="password"
-            label="New password"
-            
-          />
+          <FormInput type="password" name="password" label="New password" />
           <FormInput
             type="password"
             name="confirmPassword"
             label="Repeat password"
-            
           />
 
           <Button

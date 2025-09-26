@@ -1,4 +1,4 @@
-import { Container, Filters, Stories, Title, TopBar } from '@/shared/components/shared';
+import { Container, Filters, Title, TopBar } from '@/shared/components/shared';
 import { ProductsGroupList } from '@/shared/components/shared/products-group-list';
 import { Suspense } from 'react';
 import { findPizzas } from '@/shared/lib/find-pizzas';

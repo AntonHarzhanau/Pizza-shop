@@ -37,7 +37,7 @@ export const CheckoutSideBar: React.FC<Props> = ({
         title={
           <>
             <Package className="mr-2 text-gray-300" />
-            'Cost of food:'
+            Cost of food:
           </>
         }
         value={loading ? <Skeleton className="h-6 w-24" /> : `${totalAmount}`}
@@ -46,7 +46,7 @@ export const CheckoutSideBar: React.FC<Props> = ({
         title={
           <>
             <Percent className="mr-2 text-gray-300" />
-            'Taxes:'
+            Taxes:
           </>
         }
         value={loading ? <Skeleton className="h-6 w-24" /> : `${vatPrice} €`}
@@ -55,7 +55,7 @@ export const CheckoutSideBar: React.FC<Props> = ({
         title={
           <>
             <Truck className="mr-2 text-gray-300" />
-            'Delivery:'
+            Delivery:
           </>
         }
         value={

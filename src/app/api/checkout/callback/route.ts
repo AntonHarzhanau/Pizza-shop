@@ -19,8 +19,9 @@ export async function POST(req: NextRequest) {
       sig,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
-  } catch (err: any) {
-    return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    return new NextResponse(`Webhook Error: ${message}`, { status: 400 });
   }
 
   if (event.type.startsWith('payment_intent.')) {

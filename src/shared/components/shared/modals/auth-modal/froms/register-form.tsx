@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 import { Button, FormInput } from '@/shared/components';
 import { registerUser } from '@/app/actions';
+import { cn } from '@/shared/lib/utils';
 
 interface Props {
   onClose?: VoidFunction;
@@ -25,7 +26,7 @@ export const RegisterForm: React.FC<Props> = ({ onClose, className }) => {
   });
 
   const onSubmit = async (data: TFormRegisterValues) => {
-    console.log('here')
+    console.log('here');
     try {
       await registerUser({
         email: data.email,
@@ -47,7 +48,7 @@ export const RegisterForm: React.FC<Props> = ({ onClose, className }) => {
     <FormProvider {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-5"
+        className={cn('flex flex-col gap-5', className)}
       >
         <FormInput name="fullname" label="Full name" required />
         <FormInput name="email" label="E-mail" required />

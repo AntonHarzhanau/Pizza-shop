@@ -20,11 +20,6 @@ interface Props {
 
 export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
   const router = useRouter();
-  const firstItem = product.items[0];
-
-  const [addCartItem, loading] = useCartStore(
-    useShallow((state) => [state.addCartItem, state.loading])
-  );
 
   return (
     <Dialog open={Boolean(product)} onOpenChange={() => router.back()}>

@@ -46,7 +46,7 @@ export const Header: React.FC<Props> = ({
       router.replace('/');
       toast.success(toastMessage, {
         icon: '✅',
-        duration: 2000,
+        duration: 3000,
       });
     }
   }, []);

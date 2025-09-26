@@ -4,7 +4,7 @@ import { CheckoutFormValues } from '@/shared/constants';
 import { prisma } from '@/prisma/prisma-client';
 import { cookies } from 'next/headers';
 import { sendEmail } from '@/shared/lib';
-import { PayOrderTemplate, VerificationUserTemplate } from '@/shared/components';
+import { VerificationUserTemplate } from '@/shared/components';
 import React from 'react';
 import {
   createCheckoutSession,

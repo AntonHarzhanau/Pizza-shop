@@ -17,7 +17,6 @@ import toast from 'react-hot-toast';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { Api } from '@/shared/services/api-client';
-import { FolderMinus } from 'lucide-react';
 
 export default function CheckoutPage() {
   const [submiting, setSubmiting] = useState(false);
@@ -51,15 +50,15 @@ export default function CheckoutPage() {
       const data = await Api.auth.getMe();
       const [firstName, lastName] = data.fullname.split(' ');
 
-      (form.setValue('firstName', firstName),
-        form.setValue('lastName', lastName));
+      form.setValue('firstName', firstName);
+      form.setValue('lastName', lastName);
       form.setValue('email', data.email);
     }
 
     if (session) {
       fetchUserInfo();
     }
-  }, [session]);
+  }, [session, form]);
 
   const onSubmit: SubmitHandler<CheckoutFormValues> = async (data) => {
     try {
