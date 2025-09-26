@@ -1,4 +1,5 @@
 import { stripe } from '@/shared/lib/stripe';
+import crypto from 'crypto';
 
 export type LineItem = { name: string; unitAmount: number; quantity: number };
 
@@ -21,6 +22,8 @@ export async function createCheckoutSession({
   lineItems,
   description = `Order #${orderId}`,
 }: CreateCheckoutSessionParams) {
+  const idempotencyKey = `checkout-session:${orderId}:${crypto.randomUUID()}`;
+
   const items = lineItems?.length
     ? lineItems.map((i) => ({
         price_data: {
@@ -53,7 +56,7 @@ export async function createCheckoutSession({
       },
     },
     {
-      idempotencyKey: `checkout-session:${orderId}`,
+      idempotencyKey,
     }
   );
 
