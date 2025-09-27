@@ -78,15 +78,15 @@ export async function createOrder(data: CheckoutFormValues) {
       lineItems: lineItems,
     });
 
-    // await sendEmail(
-    //   data.email,
-    //   'Pizza Shop / Pay for order #' + order.id,
-    //   PayOrderTemplate({
-    //     orderId: order.id,
-    //     totalAmount: order.totalAmount,
-    //     paymentUrl: 'https://nextjs.org/',
-    //   }) as React.ReactElement
-    // );
+    await sendEmail(
+      data.email,
+      'Pizza Shop / Pay for order #' + order.id,
+      PayOrderTemplate({
+        orderId: order.id,
+        totalAmount: order.totalAmount,
+        paymentUrl: 'https://nextjs.org/',
+      }) as React.ReactElement
+    );
     return session.url!;
   } catch (error) {
     console.error('[CreateOrder]', error);
