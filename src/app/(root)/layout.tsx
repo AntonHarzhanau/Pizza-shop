@@ -5,6 +5,7 @@ import React, { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Pizza | Home',
+
 };
 
 export default function HomeLayout({
