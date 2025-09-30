@@ -7,17 +7,17 @@ import { CheckboxFiltersGroup } from './checkbox-filters-group';
 import { useFilters, useIngredients, useQueryFilters } from '@/shared/hooks';
 
 interface Props {
-  className?: string
+  className?: string;
+  idPrefix?: string;
 }
 
-export const Filters: React.FC<Props> = ({ className }) => {
+export const Filters: React.FC<Props> = ({ className, idPrefix = '' }) => {
   const MAX_PRICE = 50;
   const MIN_PRICE = 0;
   const STEP_PRICE = 1;
 
   const { ingredients, loading } = useIngredients();
   const filters = useFilters();
-
   useQueryFilters(filters);
 
   const items = ingredients.map((item) => ({
@@ -35,7 +35,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
       <Title text="Filters" size="sm" className="mb-5 font-bold" />
 
       <CheckboxFiltersGroup
-        name="pizzaTypes"
+        name={`${idPrefix}pizzaTypes`}
         title="Type of dough"
         onClickCheckbox={filters.setPizzaTypes}
         selected={filters.pizzaTypes}
@@ -48,7 +48,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
 
       <CheckboxFiltersGroup
         title="Sizes"
-        name="sizes"
+        name={`${idPrefix}sizes`}
         className="mb-5"
         onClickCheckbox={filters.setSizes}
         selected={filters.sizes}
@@ -61,7 +61,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
 
       <div className="mt-5 border-y border-y-neutral-100 pt-6 pb-7">
         <p className="font-bold mb-3">Price from ... to: </p>
-        <div className="flex gap-3 mb-5">
+        <div className="mb-5 flex flex-col gap-3 sm:flex-row">
           <Input
             type="number"
             placeholder="0"
@@ -98,7 +98,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
 
       <CheckboxFiltersGroup
         title="Ingridients"
-        name="ingredients"
+        name={`${idPrefix}ingredients`}
         className="mt-5"
         limit={6}
         loading={loading}
@@ -110,3 +110,4 @@ export const Filters: React.FC<Props> = ({ className }) => {
     </div>
   );
 };
+

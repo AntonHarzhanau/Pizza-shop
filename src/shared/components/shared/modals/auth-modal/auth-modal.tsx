@@ -29,7 +29,7 @@ export const AuthModal: React.FC<Props> = ({ open, onClose }) => {
       <DialogTitle hidden />
       <DialogContent
         aria-describedby={undefined}
-        className="w-[450px] bg-white p-16"
+        className="w-full max-w-[min(90vw,420px)] gap-4 bg-white p-8 sm:max-w-md sm:p-12"
       >
         {type === 'login' ? (
           <LoginForm onClose={handleClose} />

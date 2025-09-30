@@ -52,29 +52,34 @@ export const Header: React.FC<Props> = ({
   }, []);
   return (
     <header className={cn('border-b', className)}>
-      <Container className="flex items-center justify-between py-8">
-        <Link href="/">
-          <div className="flex items-center gap-4">
-            <Image src="/logo.png" alt="Logo" width={35} height={35} />
-            <div>
-              <h1 className="text-2xl uppercase font-black">Pizza</h1>
-              <p className="text-sm text-gray-400 leading-3">
-                It couldn&apos;t be more delicious.
-              </p>
-            </div>
+      <Container className="flex flex-wrap items-center justify-between gap-4 py-6 md:flex-nowrap md:py-8">
+        <Link href="/" className="flex items-center gap-4">
+          <Image src="/logo.png" alt="Logo" width={35} height={35} />
+          <div>
+            <h1 className="text-xl font-black uppercase md:text-2xl">Pizza</h1>
+            <p className="leading-3 text-xs text-gray-400 md:text-sm">
+              It couldn&apos;t be more delicious.
+            </p>
           </div>
         </Link>
 
-        <div className="mx-10 flex-1">{hasSearch && <SearchInput />}</div>
+        {hasSearch && (
+          <div className="order-3 w-full md:order-none md:mx-10 md:flex-1">
+            <SearchInput />
+          </div>
+        )}
 
-        <div className="flex items-center gap-3">
+        <div className="order-2 flex w-full flex-wrap items-center gap-3 md:order-none md:w-auto md:flex-nowrap md:justify-end">
           <AuthModal
             open={openAuthModal}
             onClose={() => setOpenAuthModal(false)}
           />
 
-          <ProfileButton onClickSignIn={() => setOpenAuthModal(true)} />
-          {hasCart && <CartButton />}
+          <ProfileButton
+            className="flex-1 md:flex-none"
+            onClickSignIn={() => setOpenAuthModal(true)}
+          />
+          {hasCart && <CartButton className="flex-1 md:flex-none" />}
         </div>
       </Container>
     </header>

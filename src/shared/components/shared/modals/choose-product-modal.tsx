@@ -9,8 +9,6 @@ import React from 'react';
 import { cn } from '@/shared/lib/utils';
 import { useRouter } from 'next/navigation';
 import { ProductWithRelations } from '@/@types/prisma';
-import { useCartStore } from '@/shared/store';
-import { useShallow } from 'zustand/react/shallow';
 import { ProductForm } from '../product-form';
 
 interface Props {
@@ -25,12 +23,14 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
     <Dialog open={Boolean(product)} onOpenChange={() => router.back()}>
       <DialogContent
         className={cn(
-          'p-0  max-w-3/4 max-h-4/5 bg-white overflow-hidden',
+          'p-0 w-[min(100vw-2rem,1040px)] max-h-[90vh] overflow-hidden bg-white sm:w-[min(100vw-4rem,1040px)]',
           className
         )}
       >
         <DialogTitle />
-        <ProductForm product={product} _onSubmit={() => router.back()} />
+        <div className="flex max-h-[90vh] flex-1 flex-col overflow-hidden min-h-0">
+          <ProductForm product={product} _onSubmit={() => router.back()} />
+        </div>
       </DialogContent>
     </Dialog>
   );

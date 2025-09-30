@@ -84,7 +84,7 @@ export default function CheckoutPage() {
   };
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 pb-16">
       <Title
         text="Placing an order"
         size="lg"
@@ -93,8 +93,8 @@ export default function CheckoutPage() {
 
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="flex gap-10">
-            <div className="flex flex-col gap-10 flex-1 mb-20">
+          <div className="flex flex-col gap-8 xl:flex-row">
+            <div className="mb-12 flex flex-1 flex-col gap-8">
               <CheckoutCart
                 items={items}
                 onClickCountButton={onClickCountButton}
@@ -111,7 +111,7 @@ export default function CheckoutPage() {
               />
             </div>
 
-            <div className="w-[450px]">
+            <div className="w-full xl:w-[380px]">
               <CheckoutSideBar
                 totalAmount={totalAmount}
                 loading={loading || submiting}

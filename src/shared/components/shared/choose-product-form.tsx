@@ -21,22 +21,27 @@ export const ChooseProductForm: React.FC<Props> = ({
   className,
 }) => {
   return (
-    <div className={cn(className, 'flex flex-1')}>
-      <div className="flex items-center justify-center flex-1 relative w-full">
+    <div
+      className={cn(
+        className,
+        'flex h-full min-h-0 flex-col gap-6 overflow-y-auto lg:flex-row lg:gap-8 lg:overflow-hidden'
+      )}
+    >
+      <div className="flex w-full flex-1 items-center justify-center bg-white p-6 sm:p-8 lg:min-h-0">
         <img
           src={imageUrl}
           alt={name}
-          className="relative left-2 top-2 transition-all z-10 duration-300 w-[350px] h-[350px]"
+          className="relative left-2 top-2 z-10 h-60 w-60 transition-all duration-300 object-contain sm:h-72 sm:w-72"
         />
       </div>
 
-      <div className="w-[490px] bg-[#f7f6f5] p-7">
-        <Title text={name} size="md" className="font-extrabold mb-1" />
+      <div className="flex w-full flex-1 flex-col bg-[#f7f6f5] p-6 sm:p-8 lg:min-h-0">
+        <Title text={name} size="md" className="mb-1 font-extrabold" />
 
         <Button
           loading={loading}
           onClick={() => onSubmit?.()}
-          className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
+          className="mt-auto h-[55px] w-full rounded-[18px] px-6 text-base"
         >
           Add to cart for {price} €
         </Button>

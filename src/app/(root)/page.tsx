@@ -26,15 +26,15 @@ export default async function Home({
       {/* <Stories /> */}
 
       <Container className="mt-10 pb-14">
-        <div className="flex gap-[60px]">
-          <div className="w-[250px]">
+        <div className="flex flex-col gap-8 lg:flex-row lg:gap-[60px]">
+          <div className="hidden lg:block lg:w-[250px]">
             <Suspense>
-              <Filters />
+              <Filters idPrefix="" />
             </Suspense>
           </div>
 
           <div className="flex-1">
-            <div className="flex flex-col gap-16">
+            <div className="flex flex-col gap-10 md:gap-16">
               {categories.map(
                 (category) =>
                   category.products.length > 0 && (

@@ -22,7 +22,7 @@ export const IngredientItem: React.FC<Props> = ({
   return (
     <div
       className={cn(
-        'flex items-center flex-col p-1 rounded-md w-24 text-center relative cursor-pointer shadow-md bg-white',
+        'flex w-full min-w-0 flex-col items-center rounded-md bg-white p-2 text-center shadow-md cursor-pointer',
         { 'border border-primary': active },
         className
       )}
@@ -32,8 +32,8 @@ export const IngredientItem: React.FC<Props> = ({
         <CircleCheck className="absolute top-2 right-2 text-primary" />
       )}
       <img src={imageUrl} width={80} height={80} alt={name} />
-      <span className="text-xs mb-1">{name}</span>
-      <span className="font-bold">{price}</span>
+      <span className="mb-1 text-xs line-clamp-2">{name}</span>
+      <span className="text-sm font-bold">{price}</span>
     </div>
   );
 };

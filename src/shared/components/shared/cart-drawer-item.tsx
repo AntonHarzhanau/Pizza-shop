@@ -26,27 +26,27 @@ export const CartDrawerItem: React.FC<Props> = ({
   return (
     <div
       className={cn(
-        'flex bg-white p-5 gap-6',
+        'flex flex-col gap-4 rounded-2xl bg-white p-5 sm:flex-row sm:gap-6',
         { 'opacity-50 pointer-events-none': disabled },
         className
       )}
     >
-      <CartItem.Image src={imageUrl} />
-
-      <div className="flex-1">
+      <div className="flex items-center gap-4">
+        <CartItem.Image src={imageUrl} />
         <CartItem.Info name={name} details={details} />
+      </div>
 
-        <hr className="my-3" />
+      <div className="flex flex-1 flex-col gap-3">
+        <hr className="border-gray-100" />
 
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <CountButton onClick={onClickCountButton} value={quantity} />
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between gap-3 sm:justify-end">
             <CartItem.Price value={price} />
             <Trash2Icon
               onClick={onClickRemove}
-              className="text-gray-400 cursor-pointer hover:text-gray-600"
-              size={16}
+              className="h-5 w-5 cursor-pointer text-gray-400 transition-colors hover:text-gray-600"
             />
           </div>
         </div>

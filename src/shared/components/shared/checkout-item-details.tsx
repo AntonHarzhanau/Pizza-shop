@@ -13,13 +13,15 @@ export const CheckoutItemDetails: React.FC<Props> = ({
   className,
 }) => {
   return (
-    <div className={cn('flex my-4', className)}>
-      <span className="flex flex-1 text-lg text-neutral-500">
-        {title}
-        <div className=" font-bold text-lg" />
-      </span>
+    <div
+      className={cn(
+        'my-4 flex flex-wrap items-center justify-between gap-2 text-base text-neutral-500',
+        className
+      )}
+    >
+      <span className="flex items-center gap-2">{title}</span>
 
-      <span className="font-bold text-lg">{value}</span>
+      <span className="text-lg font-bold text-foreground">{value}</span>
     </div>
   );
 };

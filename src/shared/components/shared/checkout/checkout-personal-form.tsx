@@ -1,6 +1,7 @@
 import React from 'react';
 import { WhiteBlock } from '../white-block';
 import { FormInput } from '../form-component';
+import { cn } from '@/shared/lib/utils';
 
 interface Props {
   className?: string;
@@ -9,8 +10,8 @@ interface Props {
 export const CheckoutPersonalForm: React.FC<Props> = ({ className }) => {
   
   return (
-    <WhiteBlock className={className} title="2. Pesonal data">
-      <div className="grid grid-cols-2 gap-5">
+    <WhiteBlock className={cn('shadow-sm', className)} title="2. Pesonal data">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <FormInput name="firstName" className="text-base" placeholder="Name" />
         <FormInput
           name="lastName"

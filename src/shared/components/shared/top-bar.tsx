@@ -1,6 +1,6 @@
 import { cn } from '@/shared/lib/utils';
 import React from 'react';
-import { Container, SortPopup } from '@/shared/components/shared';
+import { Container, MobileFilters, SortPopup } from '@/shared/components/shared';
 import { Categories } from '@/shared/components/shared';
 import { Category } from '@prisma/client';
 
@@ -17,10 +17,14 @@ export const TopBar: React.FC<Props> = ({ categories, className }) => {
         className
       )}
     >
-      <Container className="flex items-center justify-between">
+      <Container className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <Categories items={categories} />
-        <SortPopup />
+        <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
+          <MobileFilters className="lg:hidden" />
+          <SortPopup className="w-full sm:w-auto" />
+        </div>
       </Container>
     </div>
   );
 };
+

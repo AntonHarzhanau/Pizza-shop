@@ -57,14 +57,21 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   };
 
   return (
-    <div className={cn(className, 'flex flex-1')}>
-      <PizzaImage imageUrl={imageUrl} size={size} />
-      <div className="w-[600px] bg-[#f7f6f5] p-7">
-        <Title text={name} size="md" className="font-extrabold mb-1" />
+    <div
+      className={cn(
+        className,
+        'flex h-full min-h-0 flex-col gap-6 overflow-y-auto lg:flex-row lg:gap-8 lg:overflow-hidden'
+      )}
+    >
+      <div className="flex w-full flex-1 items-center justify-center bg-white p-6 sm:p-8 lg:min-h-0">
+        <PizzaImage imageUrl={imageUrl} size={size} />
+      </div>
+      <div className="flex w-full flex-1 flex-col bg-[#f7f6f5] p-6 sm:p-8 lg:min-h-0">
+        <Title text={name} size="md" className="mb-1 font-extrabold" />
 
-        <p className="text-gray-400">{textDetails}</p>
+        <p className="text-sm text-gray-500 sm:text-base">{textDetails}</p>
 
-        <div className="flex flex-col gap-4 mt-5">
+        <div className="mt-5 flex flex-col gap-4">
           <GroupVariants
             items={availableSizes}
             value={String(size)}
@@ -78,25 +85,27 @@ export const ChoosePizzaForm: React.FC<Props> = ({
           />
         </div>
 
-        <div className="bg-gray-50 p-4 rounded-md h-[400px] overflow-auto scrollbar">
-          <div className="grid grid-cols-3 gap-3">
-            {ingredients.map((ingredient) => (
-              <IngredientItem
-                key={ingredient.id}
-                name={ingredient.name}
-                price={ingredient.price}
-                imageUrl={ingredient.imageUrl}
-                onClick={() => addIngredient(ingredient.id)}
-                active={selectedIngredients.has(ingredient.id)}
-              />
-            ))}
+        <div className="mt-5 flex-1 overflow-hidden lg:min-h-0">
+          <div className="scrollbar h-full overflow-auto rounded-md bg-gray-50 p-4">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {ingredients.map((ingredient) => (
+                <IngredientItem
+                  key={ingredient.id}
+                  name={ingredient.name}
+                  price={ingredient.price}
+                  imageUrl={ingredient.imageUrl}
+                  onClick={() => addIngredient(ingredient.id)}
+                  active={selectedIngredients.has(ingredient.id)}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
         <Button
           loading={loading}
           onClick={handleClickAdd}
-          className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
+          className="mt-6 h-[55px] w-full rounded-[18px] px-6 text-base"
         >
           Add to cart {totalPrice} €
         </Button>
