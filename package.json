@@ -14,7 +14,7 @@
     "postinstall": "prisma generate"
   },
   "prisma": {
-    "schema": "src/prisma/schema.prisma",
+    "schema": "src/prisma/schemas/",
     "seed": "tsx src/prisma/seed.ts"
   },
   "dependencies": {
