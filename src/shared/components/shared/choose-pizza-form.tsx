@@ -15,6 +15,7 @@ import { getPizzaDetails } from '@/shared/lib';
 interface Props {
   imageUrl: string;
   name: string;
+  description?: string;
   ingredients: Ingredient[];
   items: ProductItem[];
   loading?: boolean;
@@ -25,6 +26,7 @@ interface Props {
 export const ChoosePizzaForm: React.FC<Props> = ({
   imageUrl,
   name,
+  description,
   ingredients,
   loading,
   onSubmit,
@@ -70,6 +72,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
         <Title text={name} size="md" className="mb-1 font-extrabold" />
 
         <p className="text-sm text-gray-500 sm:text-base">{textDetails}</p>
+        <p className="text-sm text-gray-500 sm:text-base">{description}</p>
 
         <div className="mt-5 flex flex-col gap-4">
           <GroupVariants

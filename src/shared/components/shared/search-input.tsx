@@ -76,6 +76,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
                 onClick={onClickItem}
                 key={product.id}
                 href={`/product/${product.id}`}
+                scroll={false}
                 className="flex items-center gap-3 px-3 py-2 hover:bg-primary/10"
               >
                 <img

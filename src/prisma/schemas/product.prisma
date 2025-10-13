@@ -6,6 +6,7 @@ model Product {
 
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId Int
+  description String?
 
   ingredients Ingredient[]
   items       ProductItem[]
@@ -17,7 +18,7 @@ model Product {
 model ProductItem {
   id Int @id @default(autoincrement())
 
-  price     Int
+  price     Float
   size      Int?
   pizzaType Int?
 

@@ -21,7 +21,7 @@ export const TopBar: React.FC<Props> = ({ categories, className }) => {
         <Categories items={categories} />
         <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
           <MobileFilters className="lg:hidden" />
-          <SortPopup className="w-full sm:w-auto" />
+          {/* <SortPopup className="w-full sm:w-auto" /> */}
         </div>
       </Container>
     </div>
