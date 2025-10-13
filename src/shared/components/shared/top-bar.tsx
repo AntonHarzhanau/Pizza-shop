@@ -1,6 +1,6 @@
 import { cn } from '@/shared/lib/utils';
 import React from 'react';
-import { Container, MobileFilters, SortPopup } from '@/shared/components/shared';
+import { Container, MobileFilters} from '@/shared/components/shared';
 import { Categories } from '@/shared/components/shared';
 import { Category } from '@prisma/client';
 
