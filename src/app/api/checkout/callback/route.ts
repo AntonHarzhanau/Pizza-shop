@@ -44,15 +44,18 @@ export async function POST(req: NextRequest) {
         }
 
         const items = order?.items as unknown as CartItemDTO[];
-
-        await sendEmail(
-          order.email,
-          'Pizza Shop / Your order has been successfully placed. 🎉',
-          OrderSeccessTemplate({
-            orderId: order.id,
-            items,
-          }) as React.ReactElement
-        );
+        try {
+          await sendEmail(
+            order.email,
+            'Pizza Shop / Your order has been successfully placed. 🎉',
+            OrderSeccessTemplate({
+              orderId: order.id,
+              items,
+            }) as React.ReactElement
+          );
+        } catch (e) {
+          console.error(e);
+        }
 
         const cart = await prisma.cart.findFirst({
           where: { token: order.token },
