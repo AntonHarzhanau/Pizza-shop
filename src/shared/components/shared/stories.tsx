@@ -8,6 +8,7 @@ import { cn } from '@/shared/lib/utils';
 import { Skeleton } from '../ui';
 import { X } from 'lucide-react';
 import ReactStories from 'react-insta-stories';
+import Image from 'next/image';
 
 interface Props {
   className?: string;
@@ -46,7 +47,7 @@ export const Stories: React.FC<Props> = ({ className }) => {
             <Skeleton key={index} className="w-[200px] h-[250px]" />
           ))}
         {stories.map((story) => (
-          <img
+          <Image
             key={story.id}
             src={story.previewImageUrl}
             onClick={() => onClickStory(story)}

@@ -7,6 +7,7 @@ import { signIn } from 'next-auth/react';
 import React, { useState } from 'react';
 import { LoginForm } from './froms/login-form';
 import { RegisterForm } from './froms/register-form';
+import Image from 'next/image';
 
 interface Props {
   open: boolean;
@@ -49,7 +50,7 @@ export const AuthModal: React.FC<Props> = ({ open, onClose }) => {
             type="button"
             className="gap-2 h-12 flex-1"
           >
-            <img
+            <Image
               className="w-6 h-6"
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/1200px-Octicons-mark-github.svg.png"
               alt=""
@@ -68,7 +69,7 @@ export const AuthModal: React.FC<Props> = ({ open, onClose }) => {
             type="button"
             className="gap-2 h-12 p-2 flex-1"
           >
-            <img
+            <Image
               className="w-6 h-6"
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png"
               alt=""

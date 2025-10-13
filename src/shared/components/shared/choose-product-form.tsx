@@ -1,7 +1,8 @@
-import { cn } from '@/shared/lib/utils';
+import { cn, formatPrice } from '@/shared/lib/utils';
 import React from 'react';
 import { Title } from './title';
 import { Button } from '../ui';
+import Image from 'next/image';
 
 interface Props {
   imageUrl: string;
@@ -30,7 +31,7 @@ export const ChooseProductForm: React.FC<Props> = ({
       )}
     >
       <div className="flex w-full flex-1 items-center justify-center bg-white p-6 sm:p-8 lg:min-h-0">
-        <img
+        <Image
           src={imageUrl}
           alt={name}
           className="relative left-2 top-2 z-10 h-60 w-60 transition-all duration-300 object-contain sm:h-72 sm:w-72"
@@ -48,7 +49,7 @@ export const ChooseProductForm: React.FC<Props> = ({
           onClick={() => onSubmit?.()}
           className="mt-auto h-[55px] w-full rounded-[18px] px-6 text-base"
         >
-          Add to cart for {price} €
+          Add to cart for {formatPrice(price)} €
         </Button>
       </div>
     </div>

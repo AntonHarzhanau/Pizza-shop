@@ -24,17 +24,17 @@ export async function createCheckoutSession({
 }: CreateCheckoutSessionParams) {
   const idempotencyKey = crypto
     .createHash('sha256')
-    .update(`checkout-session:${orderId}`)
+    .update(`checkout-session:${orderId + amountTotal}`)
     .digest('hex');
 
-  const items = lineItems?.length
-    ? lineItems.map((i) => ({
+  const paymentLineItems = lineItems?.length
+    ? lineItems.map((item) => ({
         price_data: {
           currency,
-          product_data: { name: i.name },
-          unit_amount: Math.round(i.unitAmount * 100),
+          product_data: { name: item.name },
+          unit_amount: Math.round(item.unitAmount * 100),
         },
-        quantity: i.quantity,
+        quantity: item.quantity,
       }))
     : [
         {
@@ -51,11 +51,14 @@ export async function createCheckoutSession({
     {
       mode: 'payment',
       payment_method_types: ['card'],
-      line_items: items,
+      line_items: paymentLineItems,
       success_url: successUrl,
       cancel_url: cancelUrl,
       payment_intent_data: {
-        metadata: { orderId: String(orderId) },
+        metadata: {
+          orderId: String(orderId),
+          amountTotal: amountTotal.toFixed(2),
+        },
       },
     },
     {

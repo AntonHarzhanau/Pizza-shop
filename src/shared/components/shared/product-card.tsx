@@ -3,6 +3,7 @@ import React from 'react';
 import { Title } from './title';
 import { Button } from '@/shared/components/ui';
 import { Plus } from 'lucide-react';
+import { formatPrice } from '@/shared/lib/utils';
 // import { Ingredient } from '@prisma/client';
 
 interface Props {
@@ -49,7 +50,7 @@ export const ProductCard: React.FC<Props> = ({
 
         <div className="mt-4 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
           <span className="text-lg sm:text-[20px]">
-            from <b>{price} €</b>
+            from <b>{formatPrice(price)} €</b>
           </span>
 
           <Button

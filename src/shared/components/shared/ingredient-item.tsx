@@ -1,5 +1,6 @@
-import { cn } from '@/shared/lib/utils';
+import { cn, formatPrice } from '@/shared/lib/utils';
 import { CircleCheck } from 'lucide-react';
+import Image from 'next/image';
 import React from 'react';
 
 interface Props {
@@ -31,9 +32,9 @@ export const IngredientItem: React.FC<Props> = ({
       {active && (
         <CircleCheck className="absolute top-2 right-2 text-primary" />
       )}
-      <img src={imageUrl} width={80} height={80} alt={name} />
+      <Image src={imageUrl} width={80} height={80} alt={name} />
       <span className="mb-1 text-xs line-clamp-2">{name}</span>
-      <span className="text-sm font-bold">{price}</span>
+      <span className="text-sm font-bold">{formatPrice(price)} €</span>
     </div>
   );
 };

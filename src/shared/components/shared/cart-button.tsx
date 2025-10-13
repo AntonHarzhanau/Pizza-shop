@@ -3,7 +3,7 @@
 import { ShoppingCart, ArrowRight } from 'lucide-react';
 import React from 'react';
 import { Button } from '../ui';
-import { cn } from '@/shared/lib/utils';
+import { cn, formatPrice } from '@/shared/lib/utils';
 import { CartDrawer } from './cart-drawer';
 import { useCartStore } from '@/shared/store';
 import { useShallow } from 'zustand/react/shallow';
@@ -27,7 +27,7 @@ export const CartButton: React.FC<Props> = ({ className }) => {
           className
         )}
       >
-        <b>{totalAmount} €</b>
+        <b>{formatPrice(totalAmount)} €</b>
         <span className="h-full w-px bg-white/30 mx-3" />
         <div className="flex items-center gap-1 transition duration-300 group-hover:opacity-0">
           <ShoppingCart size={16} className=" relative" strokeWidth={2} />

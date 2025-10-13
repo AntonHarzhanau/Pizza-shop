@@ -38,6 +38,7 @@ export const RegisterForm: React.FC<Props> = ({ onClose, className }) => {
       });
       onClose?.();
     } catch (error) {
+      console.error(error);
       return toast.error('Failed to register', {
         icon: '❌',
       });

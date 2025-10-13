@@ -9,6 +9,7 @@ import { FormInput } from '../../../form-component';
 import { Button } from '@/shared/components/ui';
 import toast from 'react-hot-toast';
 import { signIn } from 'next-auth/react';
+import Image from 'next/image';
 
 interface Props {
   onClose?: VoidFunction;
@@ -60,7 +61,7 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
             size="md"
             className="font-bold"
           />
-          <img src="/phone-icon.png" alt="phone-icon" width={60} height={60} />
+          <Image src="/phone-icon.png" alt="phone-icon" width={60} height={60} />
         </div>
 
         <p className="text-gray-400">

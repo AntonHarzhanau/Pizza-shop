@@ -1,4 +1,5 @@
 import { cn } from '@/shared/lib/utils';
+import Image from 'next/image';
 import React from 'react';
 
 interface Props {
@@ -8,6 +9,6 @@ interface Props {
 
 export const CartItemDetailsImage: React.FC<Props> = ({ src, className }) => {
   return (
-    <img className={cn('w-[60px] h-[60px]', className)} src={src} alt="" />
+    <Image className={className} width={50} height={50} src={src} alt="" />
   );
 };

@@ -3,8 +3,11 @@
 import { CheckoutFormValues } from '@/shared/constants';
 import { prisma } from '@/prisma/prisma-client';
 import { cookies } from 'next/headers';
-import { sendEmail } from '@/shared/lib';
-import { PayOrderTemplate, VerificationUserTemplate } from '@/shared/components';
+import { calcCartItemTotalPrice, sendEmail } from '@/shared/lib';
+import {
+  PayOrderTemplate,
+  VerificationUserTemplate,
+} from '@/shared/components';
 import React from 'react';
 import {
   createCheckoutSession,
@@ -64,29 +67,58 @@ export async function createOrder(data: CheckoutFormValues) {
       },
     });
     // TODO : implement payment service
-    const lineItems: LineItem[] = userCart.items.map((item) => ({
-      name: item.productItem.product.name,
-      unitAmount: item.productItem.price,
-      quantity: item.quantity,
-    }));
+    const lineItems: LineItem[] = userCart.items.map((item) => {
+      const unitWithAddons =
+        (calcCartItemTotalPrice(item) || 0) / item.quantity || 0;
+
+      return {
+        name: item.productItem.product.name,
+        unitAmount: unitWithAddons,
+        quantity: item.quantity,
+      };
+    });
+
+    // Take it out to a separate place
+    const VAT = 2;
+    const DELIVERY_PRICE = 2;
+
+    const vatPrice = (userCart.totalAmount + VAT) / 100;
+    const totalPrice = userCart.totalAmount + DELIVERY_PRICE + vatPrice;
+
+    if (vatPrice > 0) {
+      lineItems.push({
+        name: 'Taxes',
+        unitAmount: vatPrice,
+        quantity: 1,
+      });
+    }
+
+    if (DELIVERY_PRICE > 0) {
+      lineItems.push({
+        name: 'Delivery',
+        unitAmount: DELIVERY_PRICE,
+        quantity: 1,
+      });
+    }
+
     const session = await createCheckoutSession({
       orderId: order.id,
-      amountTotal: userCart.totalAmount,
+      amountTotal: totalPrice,
       successUrl: `${process.env.NEXT_PUBLIC_APP_URL}?paid`,
       cancelUrl: `${process.env.NEXT_PUBLIC_APP_URL}/checkout`,
       description: `Pizza order #${order.id}`,
       lineItems: lineItems,
     });
 
-    await sendEmail(
-      data.email,
-      'Pizza Shop / Pay for order #' + order.id,
-      PayOrderTemplate({
-        orderId: order.id,
-        totalAmount: order.totalAmount,
-        paymentUrl: 'https://nextjs.org/',
-      }) as React.ReactElement
-    );
+    // await sendEmail(
+    //   data.email,
+    //   'Pizza Shop / Pay for order #' + order.id,
+    //   PayOrderTemplate({
+    //     orderId: order.id,
+    //     totalAmount: order.totalAmount,
+    //     paymentUrl: 'https://nextjs.org/',
+    //   }) as React.ReactElement
+    // );
     return session.url!;
   } catch (error) {
     console.error('[CreateOrder]', error);

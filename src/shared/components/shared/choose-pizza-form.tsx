@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/shared/lib/utils';
+import { cn, formatPrice } from '@/shared/lib/utils';
 import React from 'react';
 import { PizzaImage } from './pizza-image';
 import { Title } from './title';
@@ -110,7 +110,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
           onClick={handleClickAdd}
           className="mt-6 h-[55px] w-full rounded-[18px] px-6 text-base"
         >
-          Add to cart {totalPrice} €
+          Add to cart {formatPrice(totalPrice)} €
         </Button>
       </div>
     </div>

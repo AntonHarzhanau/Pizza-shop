@@ -1,3 +1,4 @@
+import { formatPrice } from '@/shared/lib/utils';
 import { CartItemDTO } from '@/shared/services/dto/cart.dto';
 import React from 'react';
 
@@ -13,13 +14,13 @@ export const OrderSeccessTemplate: React.FC<Props> = ({ orderId, items }) => (
     <p>You order #{orderId} paid. List of products</p>
 
     <ul>
-      {
-        items.map((item) => (
-          <li key={item.id}>
-            {item.productItem.product.name} | {item.productItem.price} € x {item.quantity} pcs. = {item.productItem.price * item.quantity} € 
-          </li>
-        ))
-      }
-    </ul>
-  </div>
+      {items.map((item) => (
+        <li key={item.id}>
+          {item.productItem.product.name} | {formatPrice(item.productItem.price)} € x{' '}
+          {item.quantity} pcs. ={' '}
+          {formatPrice(item.productItem.price * item.quantity)} €
+        </li>
+      ))}
+  </ul>
+</div>
 );

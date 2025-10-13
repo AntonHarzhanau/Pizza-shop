@@ -4,7 +4,7 @@ import { CheckoutItemDetails } from './checkout-item-details';
 import { ArrowRight, Package, Percent, Truck } from 'lucide-react';
 import { Title } from './title';
 import { Button, Skeleton } from '../ui';
-import { cn } from '@/shared/lib/utils';
+import { cn, formatPrice } from '@/shared/lib/utils';
 
 interface Props {
   totalAmount: number;
@@ -35,7 +35,9 @@ export const CheckoutSideBar: React.FC<Props> = ({
         {loading ? (
           <Skeleton className="w-48 h-11" />
         ) : (
-          <span className="h-11 text-3xl font-extrabold">{totalPrice} €</span>
+          <span className="h-11 text-3xl font-extrabold">
+            {formatPrice(totalPrice)} €
+          </span>
         )}
       </div>
       <CheckoutItemDetails
@@ -45,7 +47,13 @@ export const CheckoutSideBar: React.FC<Props> = ({
             Cost of food:
           </>
         }
-        value={loading ? <Skeleton className="h-6 w-24" /> : `${totalAmount}`}
+        value={
+          loading ? (
+            <Skeleton className="h-6 w-24" />
+          ) : (
+            `${formatPrice(totalAmount)} €`
+          )
+        }
       />
       <CheckoutItemDetails
         title={
@@ -54,7 +62,13 @@ export const CheckoutSideBar: React.FC<Props> = ({
             Taxes:
           </>
         }
-        value={loading ? <Skeleton className="h-6 w-24" /> : `${vatPrice} €`}
+        value={
+          loading ? (
+            <Skeleton className="h-6 w-24" />
+          ) : (
+            `${formatPrice(vatPrice)} €`
+          )
+        }
       />
       <CheckoutItemDetails
         title={
@@ -64,7 +78,11 @@ export const CheckoutSideBar: React.FC<Props> = ({
           </>
         }
         value={
-          loading ? <Skeleton className="h-6 w-24" /> : `${DELIVERY_PRICE} €`
+          loading ? (
+            <Skeleton className="h-6 w-24" />
+          ) : (
+            `${formatPrice(DELIVERY_PRICE)} €`
+          )
         }
       />
 

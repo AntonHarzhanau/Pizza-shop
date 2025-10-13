@@ -1,36 +1,6 @@
-import { Prisma } from '@prisma/client';
 import { categories, _ingredients, products, pizzas } from './constants';
 import { prisma } from './prisma-client';
 import { hashSync } from 'bcrypt';
-
-const randomDecimalNumber = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min) * 10 + min * 10) / 10;
-};
-
-const generateProductItem = ({
-  productId,
-  pizzaType,
-  size,
-}: {
-  productId: number;
-  pizzaType?: 1 | 2;
-  size?: 20 | 30 | 40;
-}) => {
-  if (pizzaType) {
-    return {
-      productId,
-      price: randomDecimalNumber(8, 25),
-      pizzaType,
-      size,
-    } as Prisma.ProductItemUncheckedCreateInput;
-  }
-  return {
-    productId,
-    price: randomDecimalNumber(5, 15),
-    pizzaType,
-    size,
-  } as Prisma.ProductItemUncheckedCreateInput;
-};
 
 async function up() {
   await prisma.user.createMany({
@@ -100,57 +70,6 @@ async function up() {
       },
     });
   }
-
-  // await prisma.productItem.createMany({
-  //   data: [
-  //     // Пицца "Пепперони фреш"
-  //     generateProductItem({ productId: pizza1.id, pizzaType: 1, size: 20 }),
-  //     generateProductItem({ productId: pizza1.id, pizzaType: 2, size: 30 }),
-  //     generateProductItem({ productId: pizza1.id, pizzaType: 2, size: 40 }),
-
-  //     // Пицца "Сырная"
-  //     generateProductItem({ productId: pizza2.id, pizzaType: 1, size: 20 }),
-  //     generateProductItem({ productId: pizza2.id, pizzaType: 1, size: 30 }),
-  //     generateProductItem({ productId: pizza2.id, pizzaType: 1, size: 40 }),
-  //     generateProductItem({ productId: pizza2.id, pizzaType: 2, size: 20 }),
-  //     generateProductItem({ productId: pizza2.id, pizzaType: 2, size: 30 }),
-  //     generateProductItem({ productId: pizza2.id, pizzaType: 2, size: 40 }),
-
-  //     // Пицца "Чоризо фреш"
-  //     generateProductItem({ productId: pizza3.id, pizzaType: 1, size: 20 }),
-  //     generateProductItem({ productId: pizza3.id, pizzaType: 2, size: 30 }),
-  //     generateProductItem({ productId: pizza3.id, pizzaType: 2, size: 40 }),
-
-  //     // Остальные продукты
-  //     generateProductItem({ productId: 1 }),
-  //     generateProductItem({ productId: 2 }),
-  //     generateProductItem({ productId: 3 }),
-  //     generateProductItem({ productId: 4 }),
-  //     generateProductItem({ productId: 5 }),
-  //     generateProductItem({ productId: 6 }),
-  //     generateProductItem({ productId: 7 }),
-  //     generateProductItem({ productId: 8 }),
-  //     generateProductItem({ productId: 9 }),
-  //     generateProductItem({ productId: 10 }),
-  //     generateProductItem({ productId: 11 }),
-  //     generateProductItem({ productId: 12 }),
-  //     generateProductItem({ productId: 13 }),
-  //     generateProductItem({ productId: 14 }),
-  //     generateProductItem({ productId: 15 }),
-  //     generateProductItem({ productId: 16 }),
-  //     generateProductItem({ productId: 17 }),
-  //     generateProductItem({ productId: 18 }),
-  //     generateProductItem({ productId: 19 }),
-  //     generateProductItem({ productId: 20 }),
-  //     generateProductItem({ productId: 21 }),
-  //     generateProductItem({ productId: 22 }),
-  //     generateProductItem({ productId: 23 }),
-  //     generateProductItem({ productId: 24 }),
-  //     generateProductItem({ productId: 25 }),
-  //     generateProductItem({ productId: 26 }),
-  //     generateProductItem({ productId: 27 }),
-  //   ],
-  // });
 
   await prisma.cart.createMany({
     data: [

@@ -18,7 +18,7 @@ import { getCartItemDetails } from '@/shared/lib';
 import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
 import Image from 'next/image';
 import { Title } from '.';
-import { cn } from '@/shared/lib/utils';
+import { cn, formatPrice } from '@/shared/lib/utils';
 import { useCart } from '@/shared/hooks';
 
 export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
@@ -40,7 +40,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
         <SheetContent
         aria-describedby={undefined}
         id="cart-drawer-content-static" 
-        className="flex flex-col justify-between pb-0 bg-[#f4f1ee]">
+        className="flex flex-col justify-between pb-0 bg-sidebar-primary-foreground">
           <div
             className={cn(
               'flex flex-col h-full',
@@ -116,7 +116,9 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
                         <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
                       </span>
 
-                      <span className="font-bold text-lg">{totalAmount} €</span>
+                      <span className="font-bold text-lg">
+                        {formatPrice(totalAmount)} €
+                      </span>
                     </div>
 
                     <Button
